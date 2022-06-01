@@ -1,0 +1,71 @@
+.ngx-layout-component {
+  --ngx-layout-percent: 50%;
+  // TODO: Use gaps between cells to act as borders since we can't collapse
+  // borders in divs.
+  --ngx-layout-border: solid 1px red;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  > * {
+    position: absolute;
+    box-sizing: border-box;
+  }
+
+  > .ngx-layout-component__first, .ngx-layout-component__second {
+    border: var(--ngx-layout-border);
+    overflow: auto;
+  }
+
+  > .ngx-layout-component__first {
+    --value: calc(100% - var(--ngx-layout-percent));
+    top: 0;
+    left: 0;
+    right: var(--value);
+    bottom: 0;
+  }
+
+  > .ngx-layout-component__second {
+    --value: var(--ngx-layout-percent);
+    top: 0;
+    left: var(--value);
+    right: 0;
+    bottom: 0;
+  }
+
+  > .ngx-layout-component__splitter {
+    --size: 1em;
+    --value: calc(var(--ngx-layout-percent) - var(--size) / 2);
+    top: 0;
+    bottom: 0;
+    left: var(--value);
+    width: var(--size);
+    z-index: 1000;
+    cursor: col-resize;
+  }
+
+  &.ngx-layout-component--vertical {
+    > .ngx-layout-component__first {
+      bottom: var(--value);
+      right: 0;
+    }
+
+    > .ngx-layout-component__second {
+      top: var(--value);
+      left: 0;
+    }
+
+    > .ngx-layout-component__splitter {
+      top: var(--value);
+      bottom: unset;
+      height: var(--size);
+      cursor: row-resize;
+      left: 0;
+      right: 0;
+      width: unset;
+    }
+  }
+}
